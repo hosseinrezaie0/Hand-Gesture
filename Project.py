@@ -2,7 +2,19 @@
 import cv2
 import mediapipe as mp
 
+def get_direction(result, frame):
+    for hand_landmarks in result.multi_hand_landmarks:
+        mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
+        # Get the keypoints of wrist and middel finger
+        wrist = hand_landmarks.landmark[mp_hands.HandLandmark.WRIST]
+        middel_finger_tip = hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_TIP]
+
+        # Calculate the direction vector
+        direction_vector = (middel_finger_tip.x - wrist.x, middel_finger_tip.y - wrist.y)
+        
+
+        
 # Create Mediapipe objects
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(min_detection_confidence = 0.8, min_tracking_confidence = 0.8)
