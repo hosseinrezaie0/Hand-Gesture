@@ -34,7 +34,7 @@ hands = mp_hands.Hands(min_detection_confidence = 0.8, min_tracking_confidence =
 mp_drawing = mp.solutions.drawing_utils
 
 # Open webcam
-cam = cv2.Videocamture(0)
+cam = cv2.VideoCapture(0)
 
 while cam.isOpened():
     ret, frame = cam.read()
@@ -50,7 +50,6 @@ while cam.isOpened():
 
     if result.multi_hand_landmarks:
         pass
-
     cv2.imshow('Window', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
