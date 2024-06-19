@@ -20,6 +20,12 @@ while cam.isOpened():
     # Convert the frame from BGR (opencv channel) to RGB
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
+    # Detect hand and keypoints
+    result = hands.process(rgb_frame)
+
+    if result.multi_hand_landmarks:
+        pass
+
     cv2.imshow('Window', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
