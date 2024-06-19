@@ -12,6 +12,19 @@ def get_direction(result, frame):
 
         # Calculate the direction vector
         direction_vector = (middel_finger_tip.x - wrist.x, middel_finger_tip.y - wrist.y)
+
+        # Detect direction
+        x, y = direction_vector
+        if abs(x) > abs(y):
+            if x > 0:
+                return "Right"
+            else:
+                return "Left"
+        else:
+            if y > 0:
+                return "Down"
+            else:
+                return "Up"
         
 
         
