@@ -84,8 +84,9 @@ while cam.isOpened():
     result = hands.process(rgb_frame)
 
     if result.multi_hand_landmarks:
-        # dir = get_direction(result, rgb_frame)
+        dir = get_direction(result, rgb_frame)
         count = count_fingers(result, rgb_frame)
+        cv2.putText(frame, f"Direction: {dir}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
         cv2.putText(frame, f"Number: {count}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
     cv2.imshow('Window', frame)
