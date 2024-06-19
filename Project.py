@@ -26,6 +26,46 @@ def get_direction(result, frame):
             else:
                 return "Up"
         
+def count_fingers(result, frame):
+    for hand_landmark in result.multi_hand_landmarks:
+        mp_drawing.draw_landmarks(frame, hand_landmark, mp_hands.HAND_CONNECTIONS)
+
+        # Count fingers
+        fingers = []
+        for index, landmark in enumerate(hand_landmark.landmark):
+            # Thumb
+            if index == 4 :  
+                if(landmark.x < hand_landmark.landmark[3].x):
+                    fingers.append(1)
+                else:
+                    fingers.append(0)
+            # Index finger
+            if index == 8:
+                if (landmark.y < hand_landmark.landmark[6].y):
+                    fingers.append(1)
+                else:
+                    fingers.append(0)
+            # Middel finger
+            if index == 12:
+                if (landmark.y < hand_landmark.landmark[10].y):
+                    fingers.append(1)
+                else:
+                    fingers.append(0)
+            # Ring finger
+            if index == 16:
+                if (landmark.y, hand_landmark.landmark[14].y):
+                    fingers.append(1)
+                else: 
+                    fingers.append(0)
+            # Pinky finger
+            if index == 20:
+                if (landmark.y, hand_landmark.landmark[18].y):
+                    fingers.append(1)
+                else:
+                    fingers.append(0)
+        number_of_fingers = fingers.count(1)
+
+
 
         
 # Create Mediapipe objects
