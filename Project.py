@@ -49,7 +49,8 @@ while cam.isOpened():
     result = hands.process(rgb_frame)
 
     if result.multi_hand_landmarks:
-        pass
+        dir = get_direction(result, rgb_frame)
+
     cv2.imshow('Window', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
