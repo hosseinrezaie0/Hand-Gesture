@@ -59,6 +59,43 @@ def count_fingers(result, frame, dir):
                     else:
                         fingers.append(0)
 
+        # Count fingers for down direction
+        if dir == "Down":
+            fingers = []
+            for index, landmark in enumerate(hand_landmark.landmark):
+                if index == 4:  # Thumb
+                    if (landmark.x > hand_landmark.landmark[3].x):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                    
+                if index == 8:  # Index 
+                    if (landmark.y > hand_landmark.landmark[6].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                
+                if index == 12:  # Middle
+                    if (landmark.y > hand_landmark.landmark[10].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                
+                if index == 16:  # Ring
+                    if (landmark.y > hand_landmark.landmark[14].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+
+                if index == 20:  # Pinky
+                    if (landmark.y > hand_landmark.landmark[18].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+
+
+
+
         finger_count = fingers.count(1)
         return finger_count
 
@@ -88,6 +125,7 @@ while cam.isOpened():
         dir = get_direction(result, rgb_frame)
         count = count_fingers(result, rgb_frame, dir)
         cv2.putText(frame, f"Number: {count}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+        cv2.putText(frame, f"Direction: {dir}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
     cv2.imshow('Window', frame)
 
