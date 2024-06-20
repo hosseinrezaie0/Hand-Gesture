@@ -26,37 +26,38 @@ def get_direction(result, frame):
             else:
                 return "Up"
         
-def count_fingers(result, frame):
+def count_fingers(result, frame, dir):
     for hand_landmark in result.multi_hand_landmarks:
         mp_drawing.draw_landmarks(frame, hand_landmark, mp_hands.HAND_CONNECTIONS)
-        # Count fingers
-        fingers = []
-        for idx, landmark in enumerate(hand_landmark.landmark):
-            if idx == 4:  # Thumb
-                if (landmark.x < hand_landmark.landmark[3].x):
-                    fingers.append(1)
-                else:
-                    fingers.append(0)
-            if idx == 8:  # Index
-                if (landmark.y < hand_landmark.landmark[6].y):
-                    fingers.append(1)
-                else:
-                    fingers.append(0)
-            if idx == 12:  # Middle
-                if (landmark.y < hand_landmark.landmark[10].y):
-                    fingers.append(1)
-                else:
-                    fingers.append(0)
-            if idx == 16:  # Ring
-                if (landmark.y < hand_landmark.landmark[14].y):
-                    fingers.append(1)
-                else:
-                    fingers.append(0)
-            if idx == 20:  # Pinky
-                if (landmark.y < hand_landmark.landmark[18].y):
-                    fingers.append(1)
-                else:
-                    fingers.append(0)
+        # Count fingers for Up direction
+        if dir == "Up":
+            fingers = []
+            for idx, landmark in enumerate(hand_landmark.landmark):
+                if idx == 4:  # Thumb
+                    if (landmark.x < hand_landmark.landmark[3].x):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 8:  # Index
+                    if (landmark.y < hand_landmark.landmark[6].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 12:  # Middle
+                    if (landmark.y < hand_landmark.landmark[10].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 16:  # Ring
+                    if (landmark.y < hand_landmark.landmark[14].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 20:  # Pinky
+                    if (landmark.y < hand_landmark.landmark[18].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
 
         finger_count = fingers.count(1)
         return finger_count
@@ -84,8 +85,8 @@ while cam.isOpened():
     result = hands.process(rgb_frame)
 
     if result.multi_hand_landmarks:
-        # dir = get_direction(result, rgb_frame)
-        count = count_fingers(result, rgb_frame)
+        dir = get_direction(result, rgb_frame)
+        count = count_fingers(result, rgb_frame, dir)
         cv2.putText(frame, f"Number: {count}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
     cv2.imshow('Window', frame)
