@@ -182,7 +182,12 @@ while cam.isOpened():
 
     if result.multi_hand_landmarks:
         dir = get_direction(result, rgb_frame)
+<<<<<<< HEAD
         count = count_fingers(result, rgb_frame, dir)
+=======
+        count = count_fingers(result, rgb_frame)
+        cv2.putText(frame, f"Direction: {dir}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+>>>>>>> 3df44eefba0e5a8c688b827b5d0b74bf8e643921
         cv2.putText(frame, f"Number: {count}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
         cv2.putText(frame, f"Direction: {dir}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
