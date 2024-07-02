@@ -227,7 +227,7 @@ while cam.isOpened():
         label = left_or_right(result, dir)
         cv2.putText(frame, f"Number: {count}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
         cv2.putText(frame, f"Direction: {dir}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
-        cv2.putText(frame, f"Label : {label}", (10,90), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2, cv2.LINE_AA)
+        # cv2.putText(frame, f"Label : {label}", (10,90), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2, cv2.LINE_AA)
 
     cv2.imshow('Window', frame)
 
