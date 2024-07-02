@@ -158,8 +158,49 @@ def count_fingers(result, frame, dir):
         finger_count = fingers.count(1)
         return finger_count
 
+def left_or_right(result, dir):
+    for hand_landmark in result.multi_hand_landmarks:
+        if dir == "Up":
+            for idx, landmark in enumerate(hand_landmark.landmark):
+                if idx == 4:
+                    thumb_tip_x = landmark.x
+                if idx == 20:
+                    pinky_tip_x = landmark.x
+            if thumb_tip_x > pinky_tip_x:
+                return "Left Hand"
+            else:
+                return "Right Hand"
+        if dir == "Down":
+            for idx, landmark in enumerate(hand_landmark.landmark):
+                if idx == 4:
+                    thumb_tip_x = landmark.x
+                if idx == 20:
+                    pinky_tip_x = landmark.x
+            if thumb_tip_x > pinky_tip_x:
+                return "Right Hand"
+            else:
+                return "Left Hand"
+        if dir == "Right":
+            for idx, landmark in enumerate(hand_landmark.landmark):
+                if idx == 4:
+                    thumb_tip_y = landmark.y
+                if idx == 20:
+                    pinky_tip_y = landmark.y
+            if thumb_tip_y > pinky_tip_y:
+                return "Left Hand"
+            else:
+                return "Right Hand"
+        if dir == "Left":
+            for idx, landmark in enumerate(hand_landmark.landmark):
+                if idx == 4:
+                    thumb_tip_y = landmark.y
+                if idx == 20:
+                    pinky_tip_y = landmark.y
+            if thumb_tip_y > pinky_tip_y:
+                return "Right Hand"
+            else:
+                return "Left Hand"
 
-        
 # Create Mediapipe objects
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(min_detection_confidence = 0.8, min_tracking_confidence = 0.8)
@@ -183,8 +224,10 @@ while cam.isOpened():
     if result.multi_hand_landmarks:
         dir = get_direction(result, rgb_frame)
         count = count_fingers(result, rgb_frame, dir)
+        label = left_or_right(result, dir)
         cv2.putText(frame, f"Number: {count}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
         cv2.putText(frame, f"Direction: {dir}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+        cv2.putText(frame, f"Label : {label}", (10,90), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2, cv2.LINE_AA)
 
     cv2.imshow('Window', frame)
 
