@@ -26,7 +26,7 @@ def get_direction(result, frame):
             else:
                 return "Up"
         
-def count_fingers(result, frame, dir):
+def count_right_hand_fingers(result, frame, dir):
     for hand_landmark in result.multi_hand_landmarks:
         mp_drawing.draw_landmarks(frame, hand_landmark, mp_hands.HAND_CONNECTIONS)
         # Count fingers for Up direction
@@ -286,6 +286,9 @@ def count_left_hand_fingers(result, dir):
                         fingers.append(1)
                     else:
                         fingers.append(0)
+            
+    finger_count = fingers.count(1)
+    return finger_count
 
 def left_or_right(result, dir):
     for hand_landmark in result.multi_hand_landmarks:
@@ -352,8 +355,12 @@ while cam.isOpened():
 
     if result.multi_hand_landmarks:
         dir = get_direction(result, rgb_frame)
-        count = count_fingers(result, rgb_frame, dir)
         label = left_or_right(result, dir)
+        if label == "Right Hand":
+            count = count_right_hand_fingers(result, rgb_frame, dir)
+        if label == "Left Hand":
+            count = count_left_hand_fingers(result, dir)
+
         cv2.putText(frame, f"Number: {count}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
         cv2.putText(frame, f"Direction: {dir}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
         # cv2.putText(frame, f"Label : {label}", (10,90), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2, cv2.LINE_AA)
