@@ -158,6 +158,135 @@ def count_fingers(result, frame, dir):
         finger_count = fingers.count(1)
         return finger_count
 
+def count_left_hand_fingers(result, dir):
+
+    for hand_landmark in result.multi_hand_landmarks:
+    # Count fingers for Up direction
+        if dir == "Up":
+            fingers = []
+            for idx, landmark in enumerate(hand_landmark.landmark):
+                if idx == 4:  # Thumb
+                    if (landmark.x > hand_landmark.landmark[3].x):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 8:  # Index
+                    if (landmark.y < hand_landmark.landmark[6].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 12:  # Middle
+                    if (landmark.y < hand_landmark.landmark[10].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 16:  # Ring
+                    if (landmark.y < hand_landmark.landmark[14].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 20:  # Pinky
+                    if (landmark.y < hand_landmark.landmark[18].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+
+        # Count fingers for down direction
+        if dir == "Down":
+            fingers = []
+            for index, landmark in enumerate(hand_landmark.landmark):
+                if index == 4:  # Thumb
+                    if (landmark.x < hand_landmark.landmark[3].x):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                    
+                if index == 8:  # Index 
+                    if (landmark.y > hand_landmark.landmark[6].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                
+                if index == 12:  # Middle
+                    if (landmark.y > hand_landmark.landmark[10].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                
+                if index == 16:  # Ring
+                    if (landmark.y > hand_landmark.landmark[14].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+
+                if index == 20:  # Pinky
+                    if (landmark.y > hand_landmark.landmark[18].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                # Count fingers for down direction
+        
+        # Count fingers for right direction
+        if dir == "Right":
+            fingers = []
+            for idx, landmark in enumerate(hand_landmark.landmark):
+                if idx == 4:  # Thumb
+                    if (landmark.y > hand_landmark.landmark[3].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 8:  # Index
+                    if (landmark.x > hand_landmark.landmark[6].x):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 12:  # Middle
+                    if (landmark.x > hand_landmark.landmark[10].x):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 16:  # Ring
+                    if (landmark.x > hand_landmark.landmark[14].x):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 20:  # Pinky
+                    if (landmark.x > hand_landmark.landmark[18].x):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+
+        # Count fingers for left direction
+        if dir == "Left":
+
+            fingers = []
+            for idx, landmark in enumerate(hand_landmark.landmark):
+                if idx == 4:  # Thumb
+                    if (landmark.y < hand_landmark.landmark[3].y):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 8:  # Index
+                    if (landmark.x < hand_landmark.landmark[6].x):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 12:  # Middle
+                    if (landmark.x < hand_landmark.landmark[10].x):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 16:  # Ring
+                    if (landmark.x < hand_landmark.landmark[14].x):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+                if idx == 20:  # Pinky
+                    if (landmark.x < hand_landmark.landmark[18].x):
+                        fingers.append(1)
+                    else:
+                        fingers.append(0)
+
 def left_or_right(result, dir):
     for hand_landmark in result.multi_hand_landmarks:
         if dir == "Up":
